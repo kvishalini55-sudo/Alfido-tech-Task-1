@@ -1,0 +1,100 @@
+#include <iostream>
+using namespace std;
+
+/* ===========================
+   Singly Linked List
+   - Insert at head : O(1)
+   - Search : O(n)
+   - Delete : O(n)
+   =========================== */
+
+struct LLNode {
+    int data;
+    LLNode* next;
+    LLNode(int v): data(v), next(nullptr) {}
+};
+
+class LinkedList {
+    LLNode* head;
+public:
+    LinkedList(): head(nullptr) {}
+
+    void insert(int value) {
+        LLNode* node = new LLNode(value);
+        node->next = head;
+        head = node;
+        cout << value << " inserted\n";
+    }
+
+    
+    bool search(int value) {
+        LLNode* cur = head;
+        while (cur) {
+            if (cur->data == value) return true;
+            cur = cur->next;
+        }
+        return false;
+    }
+
+    
+    void remove(int value) {
+        if (!head) {
+            cout << value << " not found (empty list)\n";
+            return;
+        }
+
+        if (head->data == value) {
+            LLNode* tmp = head;
+            head = head->next;
+            delete tmp;
+            cout << value << " deleted\n";
+            return;
+        }
+
+        LLNode* cur = head;
+        while (cur->next && cur->next->data != value) cur = cur->next;
+
+        if (!cur->next) {
+            cout << value << " not found\n";
+            return;
+        }
+
+        LLNode* del = cur->next;
+        cur->next = del->next;
+        delete del;
+        cout << value << " deleted\n";
+    }
+
+    void display() {
+        cout << "Linked List: ";
+        LLNode* cur = head;
+        if (!cur) cout << "(empty)";
+        while (cur) {
+            cout << cur->data;
+            if (cur->next) cout << " -> ";
+            cur = cur->next;
+        }
+        cout << "\n";
+    }
+};
+
+int main() {
+    LinkedList ll;
+
+    cout << "\n=== Linked List Demo ===\n";
+    ll.insert(10);
+    ll.insert(20);
+    ll.insert(30);
+
+    ll.display();                 
+
+    cout << "Search 20: " << (ll.search(20) ? "Found" : "Not found") << "\n";
+    cout << "Search 40: " << (ll.search(40) ? "Found" : "Not found") << "\n";
+
+    ll.remove(20);
+    ll.display();                   
+
+    ll.remove(50);                  
+
+    return 0;
+}
