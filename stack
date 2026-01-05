@@ -1,0 +1,85 @@
+#include <iostream>
+using namespace std;
+
+/* ===========================
+   Stack using Linked List
+   - Push : O(1)
+   - Pop  : O(1)
+   - Search : O(n)
+   =========================== */
+
+struct StackNode {
+    int data;
+    StackNode* next;
+    StackNode(int v) : data(v), next(nullptr) {}
+};
+
+class Stack {
+    StackNode* top;
+public:
+    Stack() : top(nullptr) {}
+
+    void push(int value) {
+        StackNode* node = new StackNode(value);
+        node->next = top;
+        top = node;
+        cout << value << " pushed to stack\n";
+    }
+
+    void pop() {
+        if (!top) {
+            cout << "Stack underflow! Nothing to pop\n";
+            return;
+        }
+        StackNode* tmp = top;
+        top = top->next;
+        cout << tmp->data << " popped from stack\n";
+        delete tmp;
+    }
+
+    bool search(int value) {
+        StackNode* cur = top;
+        int pos = 0;
+        while (cur) {
+            if (cur->data == value) {
+                cout << value << " found at position " << pos << " from top\n";
+                return true;
+            }
+            cur = cur->next;
+            pos++;
+        }
+        cout << value << " not found in stack\n";
+        return false;
+    }
+
+    void display() {
+        cout << "Stack (top to bottom): ";
+        StackNode* cur = top;
+        if (!cur) cout << "(empty)";
+        while (cur) {
+            cout << cur->data;
+            if (cur->next) cout << " -> ";
+            cur = cur->next;
+        }
+        cout << "\n";
+    }
+};
+
+int main() {
+    Stack s;
+
+    cout << "\n=== Stack Demo ===\n";
+    s.push(10);
+    s.push(20);
+    s.push(30);
+
+    s.display();
+
+    s.pop();
+    s.display();
+
+    s.search(20);
+    s.search(40);
+
+    return 0;
+}
