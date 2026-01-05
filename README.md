@@ -17,7 +17,6 @@ g++ main.cpp linked_list.cpp -o linkedlist ./linkedlist
 g++ main.cpp stack.cpp -o stack ./stack
 
 ## Environment
-
 - OS: Windows 10 / 11
 - Compiler: MinGW-w64 (g++)
 - Language: C++ (C++11)
